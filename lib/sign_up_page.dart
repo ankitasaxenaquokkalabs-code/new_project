@@ -37,8 +37,13 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     for (final ctrl in [
-      _firstNameCtrl, _lastNameCtrl, _mobileCtrl,
-      _altMobileCtrl, _emailCtrl, _passwordCtrl, _confirmCtrl,
+      _firstNameCtrl,
+      _lastNameCtrl,
+      _mobileCtrl,
+      _altMobileCtrl,
+      _emailCtrl,
+      _passwordCtrl,
+      _confirmCtrl,
     ]) {
       ctrl.addListener(_rebuild);
     }
@@ -49,8 +54,13 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     for (final ctrl in [
-      _firstNameCtrl, _lastNameCtrl, _mobileCtrl,
-      _altMobileCtrl, _emailCtrl, _passwordCtrl, _confirmCtrl,
+      _firstNameCtrl,
+      _lastNameCtrl,
+      _mobileCtrl,
+      _altMobileCtrl,
+      _emailCtrl,
+      _passwordCtrl,
+      _confirmCtrl,
     ]) {
       ctrl.dispose();
     }
@@ -66,11 +76,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   bool get _isMobileValid => _mobileCtrl.text.trim().length >= 7;
+
   bool get _isAltMobileValid => _altMobileCtrl.text.trim().length >= 7;
 
   bool get _passwordsMatch =>
-      _passwordCtrl.text.isNotEmpty &&
-      _passwordCtrl.text == _confirmCtrl.text;
+      _passwordCtrl.text.isNotEmpty && _passwordCtrl.text == _confirmCtrl.text;
 
   bool get _isFormComplete =>
       _profileImage != null &&
@@ -85,33 +95,43 @@ class _SignUpPageState extends State<SignUpPage> {
 
   String? get _profileError =>
       _showErrors && _profileImage == null ? 'Profile photo is required' : null;
+
   String? get _firstNameError =>
-      _showErrors && _firstNameCtrl.text.trim().isEmpty ? 'First name is required' : null;
-  String? get _lastNameError =>
-      _showErrors && _lastNameCtrl.text.trim().isEmpty ? 'Last name is required' : null;
+      _showErrors && _firstNameCtrl.text.trim().isEmpty
+      ? 'First name is required'
+      : null;
+
+  String? get _lastNameError => _showErrors && _lastNameCtrl.text.trim().isEmpty
+      ? 'Last name is required'
+      : null;
+
   String? get _mobileError {
     if (!_showErrors) return null;
     if (_mobileCtrl.text.trim().isEmpty) return 'Mobile number is required';
     if (!_isMobileValid) return 'Enter a valid mobile number';
     return null;
   }
+
   String? get _emailError {
     if (!_showErrors) return null;
     if (_emailCtrl.text.trim().isEmpty) return 'Email address is required';
     if (!_isEmailValid) return 'Enter a valid email address';
     return null;
   }
+
   String? get _passwordError {
     if (!_showErrors) return null;
     if (_passwordCtrl.text.isEmpty) return 'Password is required';
     return null;
   }
+
   String? get _confirmError {
     if (!_showErrors) return null;
     if (_confirmCtrl.text.isEmpty) return 'Confirm password is required';
     if (!_passwordsMatch) return 'Passwords do not match';
     return null;
   }
+
   String? get _consentError =>
       _showErrors && !_consentChecked ? 'You must accept the terms' : null;
 
@@ -174,16 +194,17 @@ class _SignUpPageState extends State<SignUpPage> {
   // --- Input styling ---
 
   InputBorder get _fieldBorder => UnderlineInputBorder(
-        borderSide: const BorderSide(color: _greyBorder, width: 1),
-        borderRadius: BorderRadius.circular(5),
-      );
+    borderSide: const BorderSide(color: _greyBorder, width: 1),
+    borderRadius: BorderRadius.circular(5),
+  );
 
   InputBorder get _errorBorder => UnderlineInputBorder(
-        borderSide: const BorderSide(color: _errorColor, width: 1),
-        borderRadius: BorderRadius.circular(5),
-      );
+    borderSide: const BorderSide(color: _errorColor, width: 1),
+    borderRadius: BorderRadius.circular(5),
+  );
 
-  InputDecoration _baseDecoration(String label, {String? error}) => InputDecoration(
+  InputDecoration _baseDecoration(String label, {String? error}) =>
+      InputDecoration(
         labelText: label,
         labelStyle: _manrope(fontSize: 14),
         floatingLabelStyle: _manrope(fontSize: 12),
@@ -192,7 +213,10 @@ class _SignUpPageState extends State<SignUpPage> {
         fillColor: _inputBgColor,
         enabledBorder: error != null ? _errorBorder : _fieldBorder,
         focusedBorder: error != null ? _errorBorder : _fieldBorder,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 14,
+        ),
       );
 
   Widget _errorText(String? error) {
@@ -226,13 +250,21 @@ class _SignUpPageState extends State<SignUpPage> {
             keyboardType: keyboardType,
             obscureText: obscureText,
             obscuringCharacter: '\u2022',
-            textCapitalization: textCapitalization, // NEW
+            textCapitalization: textCapitalization,
+            // NEW
 
-            style: _manrope(fontSize: 14, fontWeight: FontWeight.w700, color: _brandColor),
+            style: _manrope(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: _brandColor,
+            ),
             scrollPadding: const EdgeInsets.only(bottom: 25),
             decoration: _baseDecoration(label, error: error).copyWith(
               suffixIcon: suffixIcon,
-              suffixIconConstraints: const BoxConstraints(minWidth: 34, minHeight: 24),
+              suffixIconConstraints: const BoxConstraints(
+                minWidth: 34,
+                minHeight: 24,
+              ),
             ),
           ),
         ),
@@ -293,22 +325,38 @@ class _SignUpPageState extends State<SignUpPage> {
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border(
-
-              bottom: BorderSide(color: error != null ? _errorColor : _greyBorder, width: 1,),
+              bottom: BorderSide(
+                color: error != null ? _errorColor : _greyBorder,
+                width: 1,
+              ),
             ),
           ),
           child: Row(
             children: [
               const SizedBox(width: 10),
-              Image.asset('assets/images/uae_flag.png', width: 20, height: 20, fit: BoxFit.cover),
+              Image.asset(
+                'assets/images/uae_flag.png',
+                width: 20,
+                height: 20,
+                fit: BoxFit.cover,
+              ),
               const SizedBox(width: 3),
-              if(label == 'Mobile number (optional)')
-              SvgPicture.asset('assets/icons/dropdown_arrow2.svg', width: 10, height: 5),
-              if(label != 'Mobile number (optional)')
-              const SizedBox(width: 1),
+              if (label == 'Mobile number (optional)')
+                SvgPicture.asset(
+                  'assets/icons/dropdown_arrow2.svg',
+                  width: 10,
+                  height: 5,
+                ),
+              if (label != 'Mobile number (optional)') const SizedBox(width: 1),
 
               const SizedBox(width: 3),
-              Text('971', style: _manrope(fontWeight: FontWeight.w700, color: _brandColor)),
+              Text(
+                '971',
+                style: _manrope(
+                  fontWeight: FontWeight.w700,
+                  color: _brandColor,
+                ),
+              ),
               const SizedBox(width: 3),
               Text('I', style: _manrope(fontWeight: FontWeight.w400)),
               const SizedBox(width: 4),
@@ -316,7 +364,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: _FloatingLabelInput(
                   controller: controller,
                   label: label,
-                  floatedLabel: label.split('(ex').first.trim(), // "* Mobile number"
+                  floatedLabel: label.split('(ex').first.trim(),
+                  // "* Mobile number"
                   labelStyle: _manrope(fontSize: 14),
                   floatedLabelStyle: _manrope(fontSize: 10),
                   textStyle: _manrope(
@@ -327,7 +376,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               if (isValid) ...[
-                SvgPicture.asset('assets/icons/checkmark.svg', width: 18, height: 18),
+                SvgPicture.asset(
+                  'assets/icons/checkmark.svg',
+                  width: 18,
+                  height: 18,
+                ),
               ],
               const SizedBox(width: 10),
             ],
@@ -356,39 +409,44 @@ class _SignUpPageState extends State<SignUpPage> {
               _buildTitleBar(),
               const SizedBox(height: 22),
               _buildProfileIcon(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
 
-                      const SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            _buildNameRow(),
-                            const SizedBox(height: 15),
-                            _buildMobileSection(),
-                            const SizedBox(height: 15),
-                            _buildWhatsAppSection(),
-                            const SizedBox(height: 15),
-                            _buildEmailPasswordSection(),
-                            const SizedBox(height: 15),
-                            _buildConsent(),
-                          ],
+              // Scrollable content area
+              Expanded(
+                child: ClipRect(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              _buildNameRow(),
+                              const SizedBox(height: 15),
+                              _buildMobileSection(),
+                              const SizedBox(height: 15),
+                              _buildWhatsAppSection(),
+                              const SizedBox(height: 15),
+                              _buildEmailPasswordSection(),
+                              const SizedBox(height: 15),
+                              _buildConsent(),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-              if (!keyboardOpen)
+
+              // Fixed bottom button — outside the scroll view
+              if (!keyboardOpen) ...[
+                const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: _buildCreateButton(),
                 ),
-
+              ],
             ],
           ),
         ),
@@ -407,13 +465,21 @@ class _SignUpPageState extends State<SignUpPage> {
               alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () => Navigator.maybePop(context),
-                child: SvgPicture.asset('assets/icons/back_arrow.svg', width: 9, height: 25),
+                child: SvgPicture.asset(
+                  'assets/icons/back_arrow.svg',
+                  width: 9,
+                  height: 25,
+                ),
               ),
             ),
             Center(
               child: Text(
                 'Create an account',
-                style: _manrope(fontSize: 18, fontWeight: FontWeight.w700, color: _brandColor),
+                style: _manrope(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: _brandColor,
+                ),
               ),
             ),
           ],
@@ -456,20 +522,30 @@ class _SignUpPageState extends State<SignUpPage> {
                       shape: BoxShape.circle,
                       color: const Color(0xFFE7E6E6),
                       border: Border.all(
-                        color: _profileError != null ? _errorColor : _brandColor,
+                        color: _profileError != null
+                            ? _errorColor
+                            : _brandColor,
                         width: 2,
                       ),
                     ),
                   ),
                   Center(
-                    child: SvgPicture.asset('assets/icons/camera_icon.svg', width: 50, height: 50),
+                    child: SvgPicture.asset(
+                      'assets/icons/camera_icon.svg',
+                      width: 50,
+                      height: 50,
+                    ),
                   ),
                 ],
                 if (hasImage)
                   Positioned(
                     right: 0,
                     bottom: 0,
-                    child: SvgPicture.asset('assets/icons/edit_icon.svg', width: 22, height: 22),
+                    child: SvgPicture.asset(
+                      'assets/icons/edit_icon.svg',
+                      width: 22,
+                      height: 22,
+                    ),
                   ),
               ],
             ),
@@ -494,7 +570,6 @@ class _SignUpPageState extends State<SignUpPage> {
             label: '* First name',
             error: _firstNameError,
             textCapitalization: TextCapitalization.words, // NEW
-
           ),
         ),
         const SizedBox(width: 21),
@@ -504,7 +579,6 @@ class _SignUpPageState extends State<SignUpPage> {
             label: '* Last name',
             error: _lastNameError,
             textCapitalization: TextCapitalization.words, // NEW
-
           ),
         ),
       ],
@@ -558,17 +632,17 @@ class _SignUpPageState extends State<SignUpPage> {
           error: _emailError,
           suffixIcon: _isEmailValid
               ? Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Center(
-              widthFactor: 1,
-              heightFactor: 1,
-              child: SvgPicture.asset(
-                'assets/icons/checkmark.svg',
-                width: 18,
-                height: 18,
-              ),
-            ),
-          )
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Center(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: SvgPicture.asset(
+                      'assets/icons/checkmark.svg',
+                      width: 18,
+                      height: 18,
+                    ),
+                  ),
+                )
               : null,
         ),
         const SizedBox(height: 15),
@@ -605,7 +679,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: 25,
                 height: 25,
                 decoration: BoxDecoration(
-
                   color: _inputBgColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -614,7 +687,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   border: Border(
                     bottom: BorderSide(
-
                       color: _consentError != null ? _errorColor : _greyBorder,
                       width: 1,
                     ),
@@ -629,14 +701,39 @@ class _SignUpPageState extends State<SignUpPage> {
             Expanded(
               child: Text.rich(
                 TextSpan(
-                  style: _manrope(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+                  style: _manrope(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
                   children: [
                     const TextSpan(text: 'I consent to the '),
-                    TextSpan(text: 'Terms of Service', style: _manrope(fontSize: 12, fontWeight: FontWeight.w400, color: _brandColor)),
+                    TextSpan(
+                      text: 'Terms of Service',
+                      style: _manrope(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: _brandColor,
+                      ),
+                    ),
                     const TextSpan(text: ', '),
-                    TextSpan(text: 'Privacy Policy', style: _manrope(fontSize: 12, fontWeight: FontWeight.w400, color: _brandColor)),
+                    TextSpan(
+                      text: 'Privacy Policy',
+                      style: _manrope(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: _brandColor,
+                      ),
+                    ),
                     const TextSpan(text: ',\nand '),
-                    TextSpan(text: 'Payment & Cancellation Policy', style: _manrope(fontSize: 12, fontWeight: FontWeight.w400, color: _brandColor)),
+                    TextSpan(
+                      text: 'Payment & Cancellation Policy',
+                      style: _manrope(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: _brandColor,
+                      ),
+                    ),
                     const TextSpan(text: ' of ABAPRO'),
                   ],
                 ),
@@ -662,13 +759,18 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Center(
           child: Text(
             'Create my account',
-            style: _manrope(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+            style: _manrope(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 class _FloatingLabelInput extends StatefulWidget {
   const _FloatingLabelInput({
     required this.controller,
@@ -680,8 +782,8 @@ class _FloatingLabelInput extends StatefulWidget {
   });
 
   final TextEditingController controller;
-  final String label;          // shown when empty & unfocused
-  final String floatedLabel;   // shown above the text
+  final String label; // shown when empty & unfocused
+  final String floatedLabel; // shown above the text
   final TextStyle labelStyle;
   final TextStyle floatedLabelStyle;
   final TextStyle textStyle;
