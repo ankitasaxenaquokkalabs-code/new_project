@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Group 1261154581">
+<path id="Vector" opacity="0.4" d="M50 99.9999C77.614 99.9999 100 77.6144 100 49.9999C100 22.3857 77.614 0 50 0C22.3857 0 0 22.3857 0 49.9999C0 77.6144 22.3857 99.9999 50 99.9999Z" fill="#C7C7C7"/>
+<g id="Vector_2">
+<use xlink:href="#stroke0_0_62" fill="#E7E6E6"/>
+<mask id="stroke1_0_62" fill="white">
+<use xlink:href="#stroke0_0_62"/>
+</mask>
+<path d="M50 99.9999C77.614 99.9999 100 77.6144 100 49.9999C100 22.3857 77.614 0 50 0C22.3857 0 0 22.3857 0 49.9999C0 77.6144 22.3857 99.9999 50 99.9999Z" stroke-width="4" stroke="#4F008B" mask="url(#stroke1_0_62)"/>
+</g>
+</g>
+<defs>
+<path id="stroke0_0_62" d="M50 99.9999C77.614 99.9999 100 77.6144 100 49.9999C100 22.3857 77.614 0 50 0C22.3857 0 0 22.3857 0 49.9999C0 77.6144 22.3857 99.9999 50 99.9999Z"/>
+</defs>
+</svg>
