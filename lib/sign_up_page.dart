@@ -385,7 +385,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               if (!keyboardOpen)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
                   child: _buildCreateButton(),
                 ),
 
