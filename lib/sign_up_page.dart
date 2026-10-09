@@ -313,28 +313,20 @@ class _SignUpPageState extends State<SignUpPage> {
               Text('I', style: _manrope(fontWeight: FontWeight.w400)),
               const SizedBox(width: 4),
               Expanded(
-                child: TextField(
+                child: _FloatingLabelInput(
                   controller: controller,
-                  keyboardType: TextInputType.phone,
-                  style: _manrope(fontSize: 14, fontWeight: FontWeight.w700, color: _brandColor),
-                  scrollPadding: const EdgeInsets.only(bottom: 25),
-                  decoration: InputDecoration(
-                    labelText: label,
-                    hintText: hintText,
-                    hintStyle: _manrope(fontSize: 14),
-                    labelStyle: _manrope(fontSize: 14),
-                    floatingLabelStyle: _manrope(fontSize: 10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    isDense: true,
-                    contentPadding: const EdgeInsets.only(top: 4, bottom: 14),
+                  label: label,
+                  floatedLabel: label.split('(ex').first.trim(), // "* Mobile number"
+                  labelStyle: _manrope(fontSize: 14),
+                  floatedLabelStyle: _manrope(fontSize: 10),
+                  textStyle: _manrope(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: _brandColor,
                   ),
                 ),
               ),
               if (isValid) ...[
-                const SizedBox(width: 4),
                 SvgPicture.asset('assets/icons/checkmark.svg', width: 18, height: 18),
               ],
               const SizedBox(width: 10),
@@ -566,9 +558,17 @@ class _SignUpPageState extends State<SignUpPage> {
           error: _emailError,
           suffixIcon: _isEmailValid
               ? Padding(
-                  padding: const EdgeInsets.only(right: 7),
-                  child: SvgPicture.asset('assets/icons/checkmark.svg', width: 18, height: 18),
-                )
+            padding: const EdgeInsets.only(right: 10),
+            child: Center(
+              widthFactor: 1,
+              heightFactor: 1,
+              child: SvgPicture.asset(
+                'assets/icons/checkmark.svg',
+                width: 18,
+                height: 18,
+              ),
+            ),
+          )
               : null,
         ),
         const SizedBox(height: 15),
@@ -665,6 +665,90 @@ class _SignUpPageState extends State<SignUpPage> {
             style: _manrope(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
           ),
         ),
+      ),
+    );
+  }
+}
+class _FloatingLabelInput extends StatefulWidget {
+  const _FloatingLabelInput({
+    required this.controller,
+    required this.label,
+    required this.floatedLabel,
+    required this.labelStyle,
+    required this.floatedLabelStyle,
+    required this.textStyle,
+  });
+
+  final TextEditingController controller;
+  final String label;          // shown when empty & unfocused
+  final String floatedLabel;   // shown above the text
+  final TextStyle labelStyle;
+  final TextStyle floatedLabelStyle;
+  final TextStyle textStyle;
+
+  @override
+  State<_FloatingLabelInput> createState() => _FloatingLabelInputState();
+}
+
+class _FloatingLabelInputState extends State<_FloatingLabelInput> {
+  final _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(() => setState(() {}));
+    widget.controller.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final floated = _focus.hasFocus || widget.controller.text.isNotEmpty;
+
+    return SizedBox(
+      height: 50,
+      child: Stack(
+        children: [
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 150),
+            left: 0,
+            right: 0,
+            top: floated ? 6 : 16,
+            child: IgnorePointer(
+              child: Text(
+                floated ? widget.floatedLabel : widget.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: (floated ? widget.floatedLabelStyle : widget.labelStyle)
+                    .copyWith(height: 1.2),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 13,
+            child: TextField(
+              controller: widget.controller,
+              focusNode: _focus,
+              keyboardType: TextInputType.phone,
+              style: widget.textStyle.copyWith(height: 1.2),
+              scrollPadding: const EdgeInsets.only(bottom: 25),
+              decoration: const InputDecoration(
+                isDense: true,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
