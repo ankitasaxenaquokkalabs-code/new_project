@@ -302,7 +302,11 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(width: 10),
               Image.asset('assets/images/uae_flag.png', width: 20, height: 20, fit: BoxFit.cover),
               const SizedBox(width: 3),
+              if(label == 'Mobile number (optional)')
               SvgPicture.asset('assets/icons/dropdown_arrow2.svg', width: 10, height: 5),
+              if(label != 'Mobile number (optional)')
+              const SizedBox(width: 1),
+
               const SizedBox(width: 3),
               Text('971', style: _manrope(fontWeight: FontWeight.w700, color: _brandColor)),
               const SizedBox(width: 3),
