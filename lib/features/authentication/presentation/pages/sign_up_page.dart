@@ -5,11 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
-const _brandColor = Color(0xFF4F008B);
-const _greyPlaceholder = Color(0xFF7F7F7F);
-const _greyBorder = Color(0xFFD0CECE);
-const _errorColor = Color(0xFFFF375E);
-const _inputBgColor = Color.fromRGBO(79, 0, 139, 0.02);
+import '../../../../core/constants/app_assets.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_dimensions.dart';
+import '../../../../core/constants/app_strings.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -94,46 +93,48 @@ class _SignUpPageState extends State<SignUpPage> {
       _consentChecked;
 
   String? get _profileError =>
-      _showErrors && _profileImage == null ? 'Profile photo is required' : null;
+      _showErrors && _profileImage == null
+      ? AppStrings.profilePhotoRequired
+      : null;
 
   String? get _firstNameError =>
       _showErrors && _firstNameCtrl.text.trim().isEmpty
-      ? 'First name is required'
+      ? AppStrings.firstNameRequired
       : null;
 
   String? get _lastNameError => _showErrors && _lastNameCtrl.text.trim().isEmpty
-      ? 'Last name is required'
+      ? AppStrings.lastNameRequired
       : null;
 
   String? get _mobileError {
     if (!_showErrors) return null;
-    if (_mobileCtrl.text.trim().isEmpty) return 'Mobile number is required';
-    if (!_isMobileValid) return 'Enter a valid mobile number';
+    if (_mobileCtrl.text.trim().isEmpty) return AppStrings.mobileNumberRequired;
+    if (!_isMobileValid) return AppStrings.invalidMobileNumber;
     return null;
   }
 
   String? get _emailError {
     if (!_showErrors) return null;
-    if (_emailCtrl.text.trim().isEmpty) return 'Email address is required';
-    if (!_isEmailValid) return 'Enter a valid email address';
+    if (_emailCtrl.text.trim().isEmpty) return AppStrings.emailRequired;
+    if (!_isEmailValid) return AppStrings.invalidEmail;
     return null;
   }
 
   String? get _passwordError {
     if (!_showErrors) return null;
-    if (_passwordCtrl.text.isEmpty) return 'Password is required';
+    if (_passwordCtrl.text.isEmpty) return AppStrings.passwordRequired;
     return null;
   }
 
   String? get _confirmError {
     if (!_showErrors) return null;
-    if (_confirmCtrl.text.isEmpty) return 'Confirm password is required';
-    if (!_passwordsMatch) return 'Passwords do not match';
+    if (_confirmCtrl.text.isEmpty) return AppStrings.confirmPasswordRequired;
+    if (!_passwordsMatch) return AppStrings.passwordsDoNotMatch;
     return null;
   }
 
   String? get _consentError =>
-      _showErrors && !_consentChecked ? 'You must accept the terms' : null;
+      _showErrors && !_consentChecked ? AppStrings.termsRequired : null;
 
   void _onCreateTap() {
     if (_isFormComplete) {
@@ -155,12 +156,12 @@ class _SignUpPageState extends State<SignUpPage> {
           children: [
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('Camera'),
+              title: const Text(AppStrings.camera),
               onTap: () => Navigator.pop(ctx, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text('Gallery'),
+              title: const Text(AppStrings.gallery),
               onTap: () => Navigator.pop(ctx, ImageSource.gallery),
             ),
           ],
@@ -179,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextStyle _manrope({
     double fontSize = 14,
     FontWeight fontWeight = FontWeight.w500,
-    Color color = _greyPlaceholder,
+    Color color = AppColors.placeholder,
   }) {
     return GoogleFonts.manrope(
       fontSize: fontSize,
@@ -189,18 +190,18 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   TextStyle get _errorStyle =>
-      _manrope(fontSize: 11, fontWeight: FontWeight.w400, color: _errorColor);
+      _manrope(fontSize: 11, fontWeight: FontWeight.w400, color: AppColors.error);
 
   // --- Input styling ---
 
   InputBorder get _fieldBorder => UnderlineInputBorder(
-    borderSide: const BorderSide(color: _greyBorder, width: 1),
-    borderRadius: BorderRadius.circular(5),
+    borderSide: const BorderSide(color: AppColors.border, width: 1),
+    borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
   );
 
   InputBorder get _errorBorder => UnderlineInputBorder(
-    borderSide: const BorderSide(color: _errorColor, width: 1),
-    borderRadius: BorderRadius.circular(5),
+    borderSide: const BorderSide(color: AppColors.error, width: 1),
+    borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
   );
 
   InputDecoration _baseDecoration(String label, {String? error}) =>
@@ -210,7 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
         floatingLabelStyle: _manrope(fontSize: 12),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
-        fillColor: _inputBgColor,
+        fillColor: AppColors.inputBackground,
         enabledBorder: error != null ? _errorBorder : _fieldBorder,
         focusedBorder: error != null ? _errorBorder : _fieldBorder,
         contentPadding: const EdgeInsets.symmetric(
@@ -244,7 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          height: 50,
+          height: AppDimensions.fieldHeight,
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
@@ -256,7 +257,7 @@ class _SignUpPageState extends State<SignUpPage> {
             style: _manrope(
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: _brandColor,
+              color: AppColors.brand,
             ),
             scrollPadding: const EdgeInsets.only(bottom: 25),
             decoration: _baseDecoration(label, error: error).copyWith(
@@ -281,7 +282,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Padding(
         padding: const EdgeInsets.only(right: 7),
         child: SvgPicture.asset(
-          obscure ? 'assets/icons/eye.svg' : 'assets/icons/eye_closed.svg',
+          obscure ? AppAssets.eye : AppAssets.eyeClosed,
           width: 24,
           height: 24,
         ),
@@ -308,7 +309,6 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _phoneField({
     required TextEditingController controller,
     required String label,
-    String? hintText,
     required bool isValid,
     String? error,
   }) {
@@ -319,14 +319,14 @@ class _SignUpPageState extends State<SignUpPage> {
         Container(
           height: 50,
           decoration: BoxDecoration(
-            color: _inputBgColor,
-            borderRadius: BorderRadius.circular(5),
+            color: AppColors.inputBackground,
+            borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
           ),
           foregroundDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
             border: Border(
               bottom: BorderSide(
-                color: error != null ? _errorColor : _greyBorder,
+                color: error != null ? AppColors.error : AppColors.border,
                 width: 1,
               ),
             ),
@@ -335,26 +335,27 @@ class _SignUpPageState extends State<SignUpPage> {
             children: [
               const SizedBox(width: 10),
               Image.asset(
-                'assets/images/uae_flag.png',
+                AppAssets.uaeFlag,
                 width: 20,
                 height: 20,
                 fit: BoxFit.cover,
               ),
               const SizedBox(width: 3),
-              if (label == 'Mobile number (optional)')
+              if (label == AppStrings.optionalMobileNumber)
                 SvgPicture.asset(
-                  'assets/icons/dropdown_arrow2.svg',
+                  AppAssets.dropdownArrow,
                   width: 10,
                   height: 5,
                 ),
-              if (label != 'Mobile number (optional)') const SizedBox(width: 1),
+              if (label != AppStrings.optionalMobileNumber)
+                const SizedBox(width: 1),
 
               const SizedBox(width: 3),
               Text(
                 '971',
                 style: _manrope(
                   fontWeight: FontWeight.w700,
-                  color: _brandColor,
+                  color: AppColors.brand,
                 ),
               ),
               const SizedBox(width: 3),
@@ -371,13 +372,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   textStyle: _manrope(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: _brandColor,
+                    color: AppColors.brand,
                   ),
                 ),
               ),
               if (isValid) ...[
                 SvgPicture.asset(
-                  'assets/icons/checkmark.svg',
+                  AppAssets.checkmark,
                   width: 18,
                   height: 18,
                 ),
@@ -400,7 +401,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Column(
@@ -418,7 +419,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         const SizedBox(height: 15),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppDimensions.pageHorizontalPadding,
+                          ),
                           child: Column(
                             children: [
                               _buildNameRow(),
@@ -458,7 +461,9 @@ class _SignUpPageState extends State<SignUpPage> {
     return SizedBox(
       height: 25,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.pageHorizontalPadding,
+        ),
         child: Stack(
           children: [
             Align(
@@ -466,7 +471,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: GestureDetector(
                 onTap: () => Navigator.maybePop(context),
                 child: SvgPicture.asset(
-                  'assets/icons/back_arrow.svg',
+                  AppAssets.backArrow,
                   width: 9,
                   height: 25,
                 ),
@@ -474,11 +479,11 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Center(
               child: Text(
-                'Create an account',
+                AppStrings.createAccount,
                 style: _manrope(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: _brandColor,
+                  color: AppColors.brand,
                 ),
               ),
             ),
@@ -507,7 +512,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: _brandColor, width: 2),
+                      border: Border.all(color: AppColors.brand, width: 2),
                       image: DecorationImage(
                         image: FileImage(_profileImage!),
                         fit: BoxFit.cover,
@@ -520,18 +525,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: const Color(0xFFE7E6E6),
+                      color: AppColors.profilePlaceholder,
                       border: Border.all(
                         color: _profileError != null
-                            ? _errorColor
-                            : _brandColor,
+                            ? AppColors.error
+                            : AppColors.brand,
                         width: 2,
                       ),
                     ),
                   ),
                   Center(
                     child: SvgPicture.asset(
-                      'assets/icons/camera_icon.svg',
+                      AppAssets.camera,
                       width: 50,
                       height: 50,
                     ),
@@ -542,7 +547,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     right: 0,
                     bottom: 0,
                     child: SvgPicture.asset(
-                      'assets/icons/edit_icon.svg',
+                      AppAssets.edit,
                       width: 22,
                       height: 22,
                     ),
@@ -567,7 +572,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Expanded(
           child: _simpleField(
             controller: _firstNameCtrl,
-            label: '* First name',
+            label: AppStrings.firstName,
             error: _firstNameError,
             textCapitalization: TextCapitalization.words, // NEW
           ),
@@ -576,7 +581,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Expanded(
           child: _simpleField(
             controller: _lastNameCtrl,
-            label: '* Last name',
+            label: AppStrings.lastName,
             error: _lastNameError,
             textCapitalization: TextCapitalization.words, // NEW
           ),
@@ -589,14 +594,14 @@ class _SignUpPageState extends State<SignUpPage> {
     return Column(
       children: [
         Text(
-          'This mobile number will be used for you to Sign In\nand will allow us to call you upon your request',
+          AppStrings.mobileSignInHint,
           textAlign: TextAlign.center,
           style: _manrope(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 5),
         _phoneField(
           controller: _mobileCtrl,
-          label: '* Mobile number(ex: 50*******)',
+          label: AppStrings.mobileNumber,
           isValid: _isMobileValid,
           error: _mobileError,
         ),
@@ -608,14 +613,14 @@ class _SignUpPageState extends State<SignUpPage> {
     return Column(
       children: [
         Text(
-          'Do you have an alternative mobile number for messaging?(WhatsApp or Telegram)',
+          AppStrings.alternativeMobileHint,
           textAlign: TextAlign.center,
           style: _manrope(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 5),
         _phoneField(
           controller: _altMobileCtrl,
-          label: 'Mobile number (optional)',
+          label: AppStrings.optionalMobileNumber,
           isValid: _isAltMobileValid,
         ),
       ],
@@ -627,7 +632,7 @@ class _SignUpPageState extends State<SignUpPage> {
       children: [
         _simpleField(
           controller: _emailCtrl,
-          label: '* Email address',
+          label: AppStrings.emailAddress,
           keyboardType: TextInputType.emailAddress,
           error: _emailError,
           suffixIcon: _isEmailValid
@@ -637,7 +642,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     widthFactor: 1,
                     heightFactor: 1,
                     child: SvgPicture.asset(
-                      'assets/icons/checkmark.svg',
+                      AppAssets.checkmark,
                       width: 18,
                       height: 18,
                     ),
@@ -648,7 +653,7 @@ class _SignUpPageState extends State<SignUpPage> {
         const SizedBox(height: 15),
         _passwordFieldWidget(
           controller: _passwordCtrl,
-          label: '* Password',
+          label: AppStrings.password,
           obscure: _obscurePassword,
           error: _passwordError,
           onToggle: () => setState(() => _obscurePassword = !_obscurePassword),
@@ -656,7 +661,7 @@ class _SignUpPageState extends State<SignUpPage> {
         const SizedBox(height: 5),
         _passwordFieldWidget(
           controller: _confirmCtrl,
-          label: '* Confirm password',
+          label: AppStrings.confirmPassword,
           obscure: _obscureConfirm,
           error: _confirmError,
           onToggle: () => setState(() => _obscureConfirm = !_obscureConfirm),
@@ -679,21 +684,23 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: 25,
                 height: 25,
                 decoration: BoxDecoration(
-                  color: _inputBgColor,
-                  borderRadius: BorderRadius.circular(5),
+                  color: AppColors.inputBackground,
+                  borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
                 ),
                 foregroundDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(AppDimensions.fieldRadius),
 
                   border: Border(
                     bottom: BorderSide(
-                      color: _consentError != null ? _errorColor : _greyBorder,
+                        color: _consentError != null
+                          ? AppColors.error
+                          : AppColors.border,
                       width: 1,
                     ),
                   ),
                 ),
                 child: _consentChecked
-                    ? const Icon(Icons.check, size: 18, color: _brandColor)
+                    ? const Icon(Icons.check, size: 18, color: AppColors.brand)
                     : null,
               ),
             ),
@@ -707,34 +714,34 @@ class _SignUpPageState extends State<SignUpPage> {
                     color: Colors.black,
                   ),
                   children: [
-                    const TextSpan(text: 'I consent to the '),
+                    const TextSpan(text: AppStrings.consentPrefix),
                     TextSpan(
-                      text: 'Terms of Service',
+                      text: AppStrings.termsOfService,
                       style: _manrope(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: _brandColor,
+                        color: AppColors.brand,
                       ),
                     ),
                     const TextSpan(text: ', '),
                     TextSpan(
-                      text: 'Privacy Policy',
+                      text: AppStrings.privacyPolicy,
                       style: _manrope(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: _brandColor,
+                        color: AppColors.brand,
                       ),
                     ),
                     const TextSpan(text: ',\nand '),
                     TextSpan(
-                      text: 'Payment & Cancellation Policy',
+                      text: AppStrings.paymentCancellationPolicy,
                       style: _manrope(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: _brandColor,
+                        color: AppColors.brand,
                       ),
                     ),
-                    const TextSpan(text: ' of ABAPRO'),
+                    const TextSpan(text: AppStrings.consentSuffix),
                   ],
                 ),
               ),
@@ -753,12 +760,14 @@ class _SignUpPageState extends State<SignUpPage> {
         height: 52,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: _isFormComplete ? _brandColor : _greyBorder,
-          borderRadius: BorderRadius.circular(65),
+          color: _isFormComplete ? AppColors.brand : AppColors.border,
+          borderRadius: BorderRadius.circular(
+            AppDimensions.actionButtonRadius,
+          ),
         ),
         child: Center(
           child: Text(
-            'Create my account',
+                AppStrings.createMyAccount,
             style: _manrope(
               fontSize: 16,
               fontWeight: FontWeight.w600,
